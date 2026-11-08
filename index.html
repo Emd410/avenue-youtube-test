@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>The Avenue RP | YouTube embed compatibility test</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0b0e;color:#f3e4c5;font:16px system-ui,Arial,sans-serif;display:grid;place-items:center;min-height:100vh;padding:20px}.wrap{max-width:880px;width:100%}h1{color:#d6ac61;font-size:1.5rem}p{color:#d4c7b3;line-height:1.5}#player{width:100%;aspect-ratio:16/9;background:#000;border:1px solid #cba25d;border-radius:12px;overflow:hidden}button{background:#cba25d;color:#18120b;border:0;border-radius:8px;padding:12px 18px;margin:8px 8px 0 0;font-weight:bold;cursor:pointer}button:disabled{opacity:.5}small{color:#a99a82}
+</style>
+</head>
+<body><main class="wrap"><h1>THE AVENUE RP · YouTube playback test</h1><p>Upload this single HTML file to a public HTTPS website and visit that hosted URL in your regular browser. Click Play / Unmute. A local file opened with file:// does not verify hosted embedding.</p><div id="player"></div><button id="play" disabled>Play</button><button id="unmute" disabled>Unmute</button><button id="pause" disabled>Pause</button><p id="status">Loading YouTube player…</p><small>Uses YouTube's official IFrame Player API. The requested video must permit embedding; autoplay and sound may require an interaction. No YouTube video is downloaded or redistributed.</small></main>
+<script>
+let player;
+window.onYouTubeIframeAPIReady=()=>{
+  player=new YT.Player('player',{videoId:'qDQZGpNmpRw',playerVars:{playsinline:1,controls:1,origin:location.origin},events:{onReady:()=>{for(const id of ['play','unmute','pause'])document.getElementById(id).disabled=false;document.getElementById('status').textContent='Ready. Try Play, then Unmute.';},onError:e=>document.getElementById('status').textContent='YouTube error '+e.data+' — player or video embedding may be unavailable.'}});
+};
+document.getElementById('play').onclick=()=>player?.playVideo();
+document.getElementById('unmute').onclick=()=>{player?.unMute();player?.setVolume(65);};
+document.getElementById('pause').onclick=()=>player?.pauseVideo();
+let s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);
+</script></body></html>
